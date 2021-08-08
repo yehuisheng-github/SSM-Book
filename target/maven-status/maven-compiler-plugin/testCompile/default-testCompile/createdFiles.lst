@@ -1,0 +1,8 @@
+service\BookServiceTest.class
+dao\BookDaoTest.class
+service\UserServiceTest.class
+dao\OrderItemDaoTest.class
+dao\UserDaoTest.class
+dao\OrderDaoTest.class
+xxx\ConfiguaraFile.class
+service\OrderServiceTest.class
