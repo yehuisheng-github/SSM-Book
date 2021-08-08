@@ -1,0 +1,53 @@
+
+1、用户表
+	CREATE TABLE `t_user` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `username` varchar(255) NOT NULL,
+	  `password` varchar(255) NOT NULL,
+	  `email` varchar(255) NOT NULL,
+	  PRIMARY KEY (`id`)
+	) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+	create index idx_user_namePwd on t_user(username,password);
+	
+2、图书表
+	CREATE TABLE `t_book` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `name` varchar(255) NOT NULL,
+	  `price` decimal(11,2) NOT NULL,
+	  `author` varchar(255) NOT NULL,
+	  `sales` int(11) NOT NULL,
+	  `stock` int(11) NOT NULL,
+	  `img_path` varchar(255) NOT NULL,
+	  PRIMARY KEY (`id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+	create index idx_book_price on t_book(price);
+	
+	
+3、订单表
+	CREATE TABLE `t_order` (
+	  `orderId` varchar(255) NOT NULL,
+	  `createTime` datetime NOT NULL,
+	  `price` decimal(11,2) NOT NULL,
+	  `status` int(11) NOT NULL,
+	  `userId` int(11) NOT NULL,
+	  PRIMARY KEY (`orderId`),
+	  KEY `fk_id` (`userId`),
+	  CONSTRAINT `fk_id` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;	
+	create index idx_order_uidTime on t_order(userId,createTime);
+	
+	
+4、订单项表
+	CREATE TABLE `t_order_item` (
+	  `id` int(11) NOT NULL AUTO_INCREMENT,
+	  `name` varchar(255) NOT NULL,
+	  `count` int(11) NOT NULL,
+	  `price` decimal(11,2) NOT NULL,
+	  `totalPrice` decimal(11,2) NOT NULL,
+	  `orderId` varchar(255) NOT NULL,
+	  PRIMARY KEY (`id`),
+	  KEY `fk_oid` (`orderId`),
+	  CONSTRAINT `fk_oid` FOREIGN KEY (`orderId`) REFERENCES `t_order` (`orderid`)
+	) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;	
+	
+	

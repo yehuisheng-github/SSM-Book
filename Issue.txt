@@ -1,0 +1,20 @@
+
+
+									issue-resolve
+									
+1、无法找到SSM框架的配置文件
+	classpath:无法找到SSM框架的配置文件
+			主要原因是：\target\classes文件夹内没有编译好的配置文件
+	解决：项目右键 --  Java Build Path -- resources -- Excluded(**) -- Remove
+	Excluded(**)变成Excluded(None)就可以了
+	
+	
+2、JDBC内存泄漏安全
+	添加监听器用于关闭对象和数据库连接池线程
+	
+3、spring监听器配置错误
+	//maven缺失jar包，重新打包：maven-clean、maven-install
+	
+4、AJAX返回JSON数据没有转换器
+	方法添加method=RequestMethod.GET	
+

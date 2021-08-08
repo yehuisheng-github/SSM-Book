@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="dao.UserDao">
+
+	<sql id="selectAll">
+		select id,username,password,email from t_user
+	</sql>
+	
+    <select id="queryUserByUserName" resultType="User" >
+        <include refid="selectAll"></include> where username = #{checkUsername}
+    </select> 
+    
+    <select id="queryUserByUserNameAndPassword" resultType="User" >
+        <include refid="selectAll"></include> 
+        where username = #{loginUsername} and password = #{loginPassword}
+    </select> 
+    
+    <insert id="saveUser">
+		insert into t_user values(#{id},#{username},#{password},#{email})
+	</insert>
+	
+</mapper>
+

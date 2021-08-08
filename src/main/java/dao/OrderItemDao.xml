@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="dao.OrderItemDao">
+
+    <insert id="saveOrderItem">
+		insert into t_order_item values(#{id},#{name},#{count},#{price},#{totalPrice},#{orderId})
+	</insert>
+	
+	<resultMap id="orderMap" type="OrderItem">
+    	<id property="id" column="id"></id>
+    	<result property="name" column="name"></result>
+        <result property="count" column="count"></result>
+        <result property="price" column="price"></result>
+        <result property="totalPrice" column="totalPrice"></result>
+        <result property="orderId" column="orderId"></result>
+        <!--一对一映射：封装用户实体类属性-->
+        <association property="order" column="order" javaType="Order">
+        	<id property="orderId" column="OorderId"></id>
+            <result property="createTime" column="OcreateTime"></result>
+            <result property="price" column="Oprice"></result>
+            <result property="status" column="Ostatus"></result>
+            <result property="userId" column="OuserId"></result>
+        </association>
+    </resultMap>
+    
+	<select id="queryOrderItem" resultMap="orderMap">
+		select 
+			i.id id,i.name name,i.count count,i.price price,i.totalPrice totalPrice,i.orderId orderId,
+			o.orderId OorderId,o.createTime OcreateTime,o.price Oprice,o.status Ostutas,o.userId OuserId
+		from 
+			t_order o 
+		right outer join 
+			(
+				select 
+					id,name,count,price,totalPrice,orderId
+				from 
+					t_order_item 
+				where 
+					orderId=#{queryOrderItemOrderId}
+			) i 
+		on 
+			i.orderId=o.orderId
+	</select>
+</mapper>
+

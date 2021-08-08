@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"	
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="dao.BookDao">
+
+	<insert id="addBook">
+		insert into t_book values(#{id},#{name},#{price},#{author},#{sales},#{stock},#{img_path})
+	</insert>
+	<delete id="deleteBookById">
+		delete from t_book where id = #{id}
+	</delete>
+	<update id="updateBook">
+		update t_book set 
+		name = #{name}, price = #{price}, author = #{author}, sales = #{sales},
+		stock = #{stock}, img_path = #{img_path} 
+		where id = #{id}
+	</update>
+
+	<sql id="selectAll">
+		select id,name,price,author,sales,stock,img_path from t_book
+	</sql>
+	
+    <select id="queryBookById" resultType="Book" >
+        <include refid="selectAll"></include> where id = #{id}
+    </select> 
+    
+    <select id="queryBooks" resultType="Book" >
+        <include refid="selectAll"></include> 
+    </select> 
+    
+    <select id="queryByPrice" resultType="Book" >
+        <include refid="selectAll"></include> where price between #{betweenMin} and #{betweenMax} order by price
+    </select>
+  
+</mapper>
